@@ -37,6 +37,7 @@ export function useCreateQuestion(roomId: string) {
         question,
         answer: null,
         createdAt: new Date().toISOString(),
+        isGenaratingAnswer: true,
       };
 
       queryClient.setQueryData<GetRoomQuestionsResponse>(
@@ -49,7 +50,7 @@ export function useCreateQuestion(roomId: string) {
     onSuccess(data, _variables, context) {
       queryClient.setQueryData<GetRoomQuestionsResponse>(
         ["get-questions", roomId],
-        (questions) => {
+        questions => {
           if (!questions) {
             return questions;
           }
@@ -64,6 +65,7 @@ export function useCreateQuestion(roomId: string) {
                 ...context.newQuestion,
                 id: data.questionId,
                 answer: data.answer,
+                isGenaratingAnswer: false,
               };
             }
 
