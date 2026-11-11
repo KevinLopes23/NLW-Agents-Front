@@ -1,100 +1,72 @@
-# 🤖 NLW Agents - Frontend
+<div align="center">
 
-Um aplicativo web moderno que permite criar salas de perguntas e respostas com interação por voz, onde uma IA responde às perguntas baseando-se no áudio gravado.
+# 🤖 NLW Agents — Front-end
 
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+**Salas de perguntas e respostas com gravação de áudio, onde uma IA responde com base no conteúdo gravado.**
+
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
+![React Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)
+![License](https://img.shields.io/badge/licença-MIT-green?style=for-the-badge)
 
-## 🚀 Funcionalidades
+</div>
 
-- ✨ Criação de salas de perguntas e respostas
-- 🎙️ Gravação de áudio em tempo real
-- 🤖 Respostas geradas por IA
-- 🎯 Interface moderna e responsiva
-- ⚡ Performance otimizada com chunks de áudio
-- 🔄 Atualização em tempo real das respostas
+---
 
-## 📋 Pré-requisitos
+## 💡 Sobre
 
-- Node.js (versão 18 ou superior)
-- NPM ou Yarn
-- Backend do projeto rodando localmente
+Interface web do NLW Agents: crie uma sala, grave o áudio de uma aula ou conversa direto do navegador e faça perguntas — a IA responde usando apenas o que foi gravado naquela sala. Desenvolvido durante o **NLW Agents** da Rocketseat e consome a API do [NLW-Agents-Back](https://github.com/KevinLopes23/NLW-Agents-Back).
 
-## 🛠️ Tecnologias Utilizadas
+## ✨ Funcionalidades
 
-- **React** - Biblioteca para construção de interfaces
-- **TypeScript** - Superset JavaScript com tipagem estática
-- **Vite** - Build tool e bundler
-- **TailwindCSS** - Framework CSS utility-first
-- **Shadcn/ui** - Componentes React reutilizáveis
-- **React Query** - Gerenciamento de estado e cache
-- **React Router** - Roteamento da aplicação
-- **Day.js** - Biblioteca para manipulação de datas
+- 🏠 Criação de salas e listagem com contagem de perguntas
+- 🎙️ Gravação de áudio no navegador (`MediaRecorder`, `audio/webm`) com envio em blocos de 5 segundos
+- 💬 Perguntas com atualização otimista e indicador de "gerando resposta"
+- 🤖 Respostas da IA exibidas na sala, com datas relativas (Day.js)
+- ✅ Formulários com React Hook Form + Zod
 
-## 💻 Instalação
+## 🛠️ Tecnologias
 
-1. Clone o repositório:
-   \`\`\`bash
-   git clone https://github.com/KevinLopes23/NLW-Agents-Front.git
-   cd NLW-Agents-Front
-   \`\`\`
+React 18 · TypeScript · Vite · Tailwind CSS 4 · shadcn/ui (Radix) · TanStack Query · React Router · React Hook Form · Zod · Day.js · Lucide · Biome
 
-2. Instale as dependências:
-   \`\`\`bash
-   npm install
+## 🔄 Fluxo
 
-# ou
+```mermaid
+flowchart LR
+    A["/ <br/>criar ou escolher sala"] --> B["/room/:roomId<br/>perguntas e respostas"]
+    B --> C["/room/:roomId/audio<br/>gravar áudio"]
+    C -- "POST /rooms/:roomId/audio<br/>a cada 5 s" --> API[(NLW Agents API<br/>localhost:3333)]
+    B -- "POST /rooms/:roomId/questions" --> API
+```
 
-yarn
-\`\`\`
+## 🧭 Páginas
 
-3. Inicie o servidor de desenvolvimento:
-   \`\`\`bash
-   npm run dev
+| Rota | Descrição |
+|---|---|
+| `/` | Criação de sala e lista de salas existentes |
+| `/room/:roomId` | Perguntas e respostas da sala |
+| `/room/:roomId/audio` | Gravação do áudio da sala |
 
-# ou
+## 🚀 Como rodar
 
-yarn dev
-\`\`\`
+Pré-requisitos: Node.js 18+ e o [back-end](https://github.com/KevinLopes23/NLW-Agents-Back) rodando em `http://localhost:3333`.
 
-## 🏗️ Estrutura do Projeto
+```bash
+npm install
+npm run dev
+```
 
-\`\`\`
-src/
-├── components/ # Componentes reutilizáveis
-│ ├── ui/ # Componentes de UI base
-│ └── ... # Outros componentes
-├── http/ # Lógica de comunicação com API
-│ ├── types/ # Tipos TypeScript para requests/responses
-│ └── ... # Hooks de requisições
-├── lib/ # Utilitários e configurações
-├── pages/ # Páginas da aplicação
-└── assets/ # Recursos estáticos
-\`\`\`
+Acesse `http://localhost:5173`. A URL da API está fixa em `src/http/*` e `src/pages/record-room-audio.tsx` (`http://localhost:3333`).
 
-## 📱 Páginas
-
-- **/** - Lista de salas disponíveis
-- **/create-room** - Criação de nova sala
-- **/room/:id** - Visualização de perguntas da sala
-- **/record-room-audio/:id** - Gravação de áudio para a sala
-
-## 🔄 Fluxo de Funcionamento
-
-1. Usuário cria uma nova sala
-2. Acessa a sala e pode começar a gravar áudio
-3. O áudio é enviado em chunks de 5 segundos para o backend
-4. A IA processa o áudio e gera respostas
-5. As respostas são exibidas em tempo real na interface
-
+Build de produção: `npm run build` (gera `dist/`) e `npm run preview`.
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Distribuído sob a licença MIT. Veja [`LICENSE`](LICENSE).
 
-## ✨ Agradecimentos
+## 👤 Autor
 
-- Rocketseat pela iniciativa NLW
-- Comunidade pelo suporte e feedback
+Feito por [Kevin Lopes](https://github.com/KevinLopes23)
